@@ -22,6 +22,9 @@ body {
   justify-content: center;
   padding: 10px;
 }
+.text{
+  margin-bottom: 5px;
+}
 .gif{
   /* position: absolute; */
   /* top:280px;

@@ -9,6 +9,7 @@ function App() {
     "http://sfxcontent.s3.amazonaws.com/soundfx/UniversalTelephoneRing.mp3"
   );
   const [count, setCount] = useState();
+  const [time, setTime] = useState();
   const [active, setActive] = useState(false);
   const [open, setOpen] = useState(false);
   const [severity, setSeverity] = useState("");
@@ -17,6 +18,9 @@ function App() {
   const horizontal = "right";
   const handleChange = (event) => {
     setCount(event.target.value);
+  };
+  const handleChange1 = (event) => {
+    setTime(event.target.value);
   };
   const start = () => {
     setActive(true);
@@ -42,7 +46,10 @@ function App() {
     setTimeout(() => {
       audio.play();
       setCount(count - 1);
-    }, 60000);
+    }, time * 60000);
+  }
+  if (count === 0) {
+    setActive(false);
   }
   return (
     <div className="container">
@@ -68,6 +75,16 @@ function App() {
           id="outlined-basic"
           onChange={handleChange}
           variant="outlined"
+          label="Time"
+          fullWidth
+        />
+      </div>
+      <div className="text">
+        <TextField
+          id="outlined-basic"
+          onChange={handleChange1}
+          variant="outlined"
+          label="Time unit"
           fullWidth
         />
       </div>
