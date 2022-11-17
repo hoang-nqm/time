@@ -1,4 +1,4 @@
-import { Button, Typography } from "@mui/material";
+import { Alert, Button, Snackbar } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import React, { useState } from "react";
 import "./App.css";
@@ -10,18 +10,39 @@ function App() {
   );
   const [count, setCount] = useState();
   const [active, setActive] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [severity, setSeverity] = useState("");
+  const [message, setMessage] = useState("");
+  const vertical = "bottom";
+  const horizontal = "right";
   const handleChange = (event) => {
     setCount(event.target.value);
   };
-  const test = () => {
+  const start = () => {
     setActive(true);
+    setOpen(true);
+    setSeverity("success");
+    setMessage("Start");
+  };
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
+  };
+  const stop = () => {
+    setActive(false);
+    setOpen(true);
+    setSeverity("error");
+    setMessage("Stop");
   };
 
   if ((active === true) & (count > 0)) {
     setTimeout(() => {
       audio.play();
       setCount(count - 1);
-    }, 60000);
+    }, 6000);
   }
   return (
     <div className="container">
@@ -56,12 +77,35 @@ function App() {
             backgroundColor: "rgb(144, 202, 249)",
             color: "rgba(0, 0, 0, 0.87)",
           }}
-          onClick={test}
+          onClick={start}
           variant="contained"
+          defaultValue={count}
         >
           Start
         </Button>
+        <Button
+          style={{
+            backgroundColor: "rgb(144, 202, 249)",
+            color: "rgba(0, 0, 0, 0.87)",
+            marginLeft: "10px",
+          }}
+          onClick={stop}
+          variant="contained"
+        >
+          Stop
+        </Button>
       </div>
+      <Snackbar
+        anchorOrigin={{ vertical, horizontal }}
+        open={open}
+        autoHideDuration={3000}
+        key={vertical + horizontal}
+        onClose={handleClose}
+      >
+        <Alert onClose={handleClose} severity={severity} sx={{ width: "100%" }}>
+          {message}
+        </Alert>
+      </Snackbar>
     </div>
   );
 }
