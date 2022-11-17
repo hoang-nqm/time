@@ -42,7 +42,7 @@ function App() {
     setTimeout(() => {
       audio.play();
       setCount(count - 1);
-    }, 6000);
+    }, 60000);
   }
   return (
     <div className="container">
